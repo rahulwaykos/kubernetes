@@ -14,7 +14,7 @@ acts as a controlling node and point of contact. The master server consists of v
 a cloud-controller-manager, a kube-scheduler, and a DNS server for Kubernetes services. Node components include kubelet and kube-proxy on top of Docker.
 
 
-![kube_arch](https://github.com/rahulwaykos/kubernetes/blob/master/k01/kube_arch.png)
+  ![kube_arch](https://github.com/rahulwaykos/kubernetes/blob/master/k01/kube_arch.png)
 
 ## Master Components
 Below are the main components found on the master node:
