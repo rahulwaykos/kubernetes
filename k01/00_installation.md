@@ -1,6 +1,6 @@
 # Installing K8s cluster in minutes
 
-![k8s](/k8s.png)
+![k8s](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/k01/kubernetes.png)
 
 The process of creating a cluster is bit hectic. It is easy but time consuming. You have to follow the lots of steps to get kubernetes cluster up running. There are kubernetes playground available online to play with and practice your skills. But if you are planning to set up on in-house or on cloud environment for testing of practising you skills, then this blog is for you. I am not going to describe each every step to create cluster. Although this blog follow official docs of kubernetes to create cluster.
 
