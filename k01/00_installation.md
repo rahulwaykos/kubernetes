@@ -6,8 +6,8 @@ The process of creating a cluster is bit hectic. It is easy but time consuming. 
 
 It is mandatory to meet hardware requirements to set up cluster. 
 - Minimal required memory & CPU (cores)
-1. Master node’s minimal required memory is 2GB and the worker node needs minimum is 1GB
-2. The master node needs at least 1.5 and the worker node need at least 0.7 cores.
+    1. Master node’s minimal required memory is 2GB and the worker node needs minimum is 1GB
+    2. The master node needs at least 1.5 and the worker node need at least 0.7 cores.
 
 If you fullfil these, you are ready to go. Just run following command and enter IP address of master(for API server) when prompted.
 
@@ -22,12 +22,13 @@ $ scp k8s/nodes/* root@<worker_node_ip>:~
 After copying all files switch to respective node and run following command:
 
 ```
-sh node_join.sh
+$ sh node_join.sh
 ```
 
 And your are good to go !!!
 
-Switch kubernetes master and check whether your cluster is up and running. If not wait for few minutes to run all pods.
+Switch to kubernetes master and check whether your cluster is up and running. If not wait for few minutes to run all pods.
 
 Note: If you happens to reboot the machine remember to run the swapoff -a command after every reboot. As above script does changes your fstab entry to disable swap. 
 
+Hope you like this blog!!! Please suggest any changes required or any errors occured during the setup to update the script. Thanks!!!!
