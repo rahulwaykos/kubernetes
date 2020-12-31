@@ -35,7 +35,7 @@ resource "aws_instance" "cluster_member" {
   #ami                         = "ami-0885b1f6bd170450c" #centos 8
   ami                         = "ami-0015b9ef68c77328d" #centos 7
   subnet_id                   = var.subnet_id
-  instance_type               = "t2.micro"
+  instance_type               = "t2.medium"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.ceph_sec_grp.id]
   key_name                    = var.key_name
@@ -122,6 +122,33 @@ resource "null_resource" "set_hostname_2" {
   }
 }
 
+resource "null_resource" "set_hostname_3" {
+  count = var.cluster_member_count
+  depends_on = [ "null_resource.cluster_hosts" ]
+  # Changes to any instance of the cluster requires re-provisioning
+  triggers = {
+    cluster_instance_ids = "${join(",", aws_instance.cluster_member.*.id)}"
+  }
+  connection {
+    type = "ssh"
+    host = "${element(aws_instance.cluster_member.*.public_ip, 3)}"
+    user = "centos"
+    private_key = file(var.private_key_path)
+  }
+
+  provisioner "remote-exec" {
+    # Bootstrap script called with private_ip of each node in the cluster
+    inline = [
+      
+      "sudo hostnamectl set-hostname node-3 ",
+      "cat /dev/zero | ssh-keygen -q -N \"\"",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-3",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-4",
+    
+    ]
+  }
+}
+
 resource "null_resource" "set_hostname_0" {
   count = var.cluster_member_count
   depends_on = [ "null_resource.cluster_hosts" ]
@@ -141,12 +168,47 @@ resource "null_resource" "set_hostname_0" {
     inline = [
       
       "sudo hostnamectl set-hostname node-0 ",
+      "yum install git ansible wget python-netaddr -y",
+      "cat /dev/zero | ssh-keygen -q -N \"\"",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-0",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-1",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-2",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-3",
+      "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-4",
+      "git clone https://github.com/ceph/ceph-ansible.git && cd ceph-ansible",
+      "git checkout stable-4.0",
+      "wget https://raw.githubusercontent.com/rahulwaykos/terraform-ceph-aws/main/inventory",
+      "wget https://raw.githubusercontent.com/rahulwaykos/ceph-ansible/master/all.yml -O /root/ceph-ansible/group_vars/all.yml",
   
     
     ]
   }
 }
 
+resource "null_resource" "set_hostname_4" {
+  count = var.cluster_member_count
+  depends_on = [ "null_resource.cluster_hosts" ]
+  # Changes to any instance of the cluster requires re-provisioning
+  triggers = {
+    cluster_instance_ids = "${join(",", aws_instance.cluster_member.*.id)}"
+  }
+  connection {
+    type = "ssh"
+    host = "${element(aws_instance.cluster_member.*.public_ip, 4)}"
+    user = "centos"
+    private_key = file(var.private_key_path)
+  }
+
+  provisioner "remote-exec" {
+    # Bootstrap script called with private_ip of each node in the cluster
+    inline = [
+      
+      "sudo hostnamectl set-hostname node-4 ",
+  
+    
+    ]
+  }
+}
 
 
 output "node0_ip" {
@@ -158,4 +220,11 @@ output "node1_ip" {
 output "node2_ip" {
   value = aws_instance.cluster_member[2].public_ip
 }
+output "node3_ip" {
+  value = aws_instance.cluster_member[3].public_ip
+}
+output "node4_ip" {
+  value = aws_instance.cluster_member[4].public_ip
+}
+
 
