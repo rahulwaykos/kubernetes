@@ -192,7 +192,7 @@ resource "null_resource" "set_hostname_3" {
   }
 }
 
-output "admin_ip" {
+output "node0_ip" {
   value = aws_instance.cluster_member[0].public_ip
 }
 output "node1_ip" {
@@ -201,9 +201,9 @@ output "node1_ip" {
 output "node2_ip" {
   value = aws_instance.cluster_member[2].public_ip
 }
-output "node2_ip" {
+output "node3_ip" {
   value = aws_instance.cluster_member[3].public_ip
 }
-output "node2_ip" {
+output "node4_ip" {
   value = aws_instance.cluster_member[4].public_ip
 }
