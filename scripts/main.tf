@@ -146,51 +146,8 @@ resource "null_resource" "set_hostname_0" {
     ]
   }
 }
-resource "null_resource" "set_hostname_4" {
-  count = var.cluster_member_count
-  depends_on = [ "null_resource.cluster_hosts" ]
-  # Changes to any instance of the cluster requires re-provisioning
-  triggers = {
-    cluster_instance_ids = "${join(",", aws_instance.cluster_member.*.id)}"
-  }
-  connection {
-    type = "ssh"
-    host = "${element(aws_instance.cluster_member.*.public_ip, 4)}"
-    user = "centos"
-    private_key = file(var.private_key_path)
-  }
 
-  provisioner "remote-exec" {
-    # Bootstrap script called with private_ip of each node in the cluster
-    inline = [
-      "sudo hostnamectl set-hostname node-4 ",
-      
-    ]
-  }
-}
 
-resource "null_resource" "set_hostname_3" {
-  count = var.cluster_member_count
-  depends_on = [ "null_resource.cluster_hosts" ]
-  # Changes to any instance of the cluster requires re-provisioning
-  triggers = {
-    cluster_instance_ids = "${join(",", aws_instance.cluster_member.*.id)}"
-  }
-  connection {
-    type = "ssh"
-    host = "${element(aws_instance.cluster_member.*.public_ip, 3)}"
-    user = "centos"
-    private_key = file(var.private_key_path)
-  }
-
-  provisioner "remote-exec" {
-    # Bootstrap script called with private_ip of each node in the cluster
-    inline = [
-      "sudo hostnamectl set-hostname node-3 ",
-      
-    ]
-  }
-}
 
 output "node0_ip" {
   value = aws_instance.cluster_member[0].public_ip
@@ -201,9 +158,4 @@ output "node1_ip" {
 output "node2_ip" {
   value = aws_instance.cluster_member[2].public_ip
 }
-output "node3_ip" {
-  value = aws_instance.cluster_member[3].public_ip
-}
-output "node4_ip" {
-  value = aws_instance.cluster_member[4].public_ip
-}
+
