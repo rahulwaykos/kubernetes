@@ -67,7 +67,7 @@ resource "null_resource" "cluster_hosts" {
       # Adds all cluster members' IP addresses to /etc/hosts (on each member)
       "echo '${join("\n", formatlist("%v", aws_instance.cluster_member.*.private_ip))}' | awk 'BEGIN{ print \"\\n\\n# Cluster members:\" }; { print $0 \" ${var.cluster_member_name_prefix}\"  NR-1  }' | sudo tee -a /etc/hosts > /dev/null",
       
-      "sudo yum install chrony sshpass python3 -y > /dev/null",
+      "sudo yum install chrony git wget sshpass python3 -y > /dev/null",
       "sudo systemctl restart chronyd ",
       "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "echo redhat | sudo passwd --stdin centos",
@@ -132,8 +132,8 @@ resource "null_resource" "set_hostname_3" {
   connection {
     type = "ssh"
     host = "${element(aws_instance.cluster_member.*.public_ip, 3)}"
-    user = "centos"
-    private_key = file(var.private_key_path)
+    user = "root"
+    password = "redhat"
   }
 
   provisioner "remote-exec" {
@@ -159,8 +159,8 @@ resource "null_resource" "set_hostname_0" {
   connection {
     type = "ssh"
     host = "${element(aws_instance.cluster_member.*.public_ip, 0)}"
-    user = "centos"
-    private_key = file(var.private_key_path)
+    user = "root"
+    password = "redhat"
   }
 
   provisioner "remote-exec" {
@@ -175,10 +175,10 @@ resource "null_resource" "set_hostname_0" {
       "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-2",
       "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-3",
       "sshpass -p redhat ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node-4",
-      "git clone https://github.com/ceph/ceph-ansible.git && cd ceph-ansible",
-      "git checkout stable-4.0",
-      "wget https://raw.githubusercontent.com/rahulwaykos/terraform-ceph-aws/main/inventory",
-      "wget https://raw.githubusercontent.com/rahulwaykos/ceph-ansible/master/all.yml -O /root/ceph-ansible/group_vars/all.yml",
+    #  "git clone https://github.com/ceph/ceph-ansible.git && cd ceph-ansible",
+    #  "git checkout stable-4.0",
+    #  "wget https://raw.githubusercontent.com/rahulwaykos/terraform-ceph-aws/main/inventory",
+    #  "wget https://raw.githubusercontent.com/rahulwaykos/ceph-ansible/master/all.yml -O /root/ceph-ansible/group_vars/all.yml",
   
     
     ]
