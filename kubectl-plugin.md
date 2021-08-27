@@ -21,7 +21,7 @@ following command :
 Just place your executable script anywhere in your PATH and you are good to go.
 
 ## How to write Plugin
-Create file starting with `kubectl-`. For example, `kubectl-greetings' which will create `kubectl greetings` command. To install plugin, you must
+Create file starting with `kubectl-`. For example, `kubectl-greetings` which will create `kubectl greetings` command. To install plugin, you must
 save this file anywhere in you PATH. Following is example of plugin that will greet user
 
 ```
