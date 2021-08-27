@@ -1,8 +1,10 @@
-### Extending scope of kubectl with subcommands
+# Extending scope of kubectl with subcommands
+
+![kubectl](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl.png)
 
 Before diving into the topic, lets have look at few terminologies.
 
-#### Kubernetes and kubectl
+## Kubernetes and kubectl
 Kubernetes, also known as k8s, is opensource container-orchestration tool which is generally used manage the containers,
 aplication deployments, services. If you run your workload on containers then kubernetes is best option to choose. Best thing about 
 kubernetes is its opensource. You can deploy it on you on-premise servers or cloud managed server, you dont have pay for anything.
@@ -10,7 +12,7 @@ Once you cluster is up and running, kubectl, is tool with whom you spend your mo
 application, services, inspect containers, to check logs. kubectl comes with lots of sub-command. Each sub-command has its own use. In this blog,
 we are going to create our own subcommand, which is known as plugins.
 
-#### kubectl plugins
+## kubectl Plugins
 Kubectl plugins are standalone scripts. Scripts can be written in any programming language. These executable scripts are stored in your `PATH` and whose names start with `kubectl-`. PATH is where all you command are present. You can see PATH by
 following command :
 ```
@@ -18,7 +20,7 @@ following command :
 ```
 Just place your executable script anywhere in your PATH and you are good to go.
 
-#### How to write Plugin
+## How to write Plugin
 Create file starting with `kubectl-`. For example, `kubectl-greetings' which will create `kubectl greetings` command. To install plugin, you must
 save this file anywhere in you PATH. Following is example of plugin that will greet user
 
@@ -45,7 +47,7 @@ Save this in kubectl-greetings and run following command to make it executable. 
 ```
 Now you are all set to run `kubectl greetings` command which will output `Hello` with username. Output is shown in following screenshot
 
-
+![kubectl-greetings](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl-greetings.png)
 
 
 
