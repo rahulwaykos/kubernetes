@@ -41,7 +41,7 @@ then
 fi
 
 ```
-Save this in kubectl-greetings and run following command to make it executable. After that move this file to anywhere in you `PATH` with `mv` command.
+Save this in kubectl-greetings and run following command to make it executable. After that move this file anywhere in you `PATH` with `mv` command.
 ```
 # chmod +x kubectl-greetings
 ```
@@ -49,7 +49,13 @@ Now you are all set to run `kubectl greetings` command which will output `Hello`
 
 ![kubectl-greetings](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl-greetings.png)
 
+You can check all installed plugins by running following command:
+```
+# kubectl plugin list
+```
 
+## Limitations 
+It is not possible to create plugins which will overwrite existing kubectl command. For example, if you create `kubectl-create` script and try to run it, `kubectl create` command will always take precedence over it and your script will be ignored. For this reason you also cannot create 
 
 
 
