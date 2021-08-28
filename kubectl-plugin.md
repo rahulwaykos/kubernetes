@@ -46,7 +46,7 @@ Save this in kubectl-greetings and run following command to make it executable. 
 ```
 Now you are all set to run `kubectl greetings` command which will output `Hello` with username. Output is shown in following screenshot
 
-![kubectl-greetings](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl-greetings1.png)
+![kubectl-greetings](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl.cat)
 
 You can check all installed plugins by running following command:
 ```
