@@ -36,7 +36,7 @@ fi
 
 if [[ "$1" == "version" ]]
 then
-    echo "1.0."
+    echo "1.0"
     exit 0
 fi
 
