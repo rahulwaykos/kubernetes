@@ -13,8 +13,7 @@ application, services, inspect containers, to check logs. kubectl comes with lot
 we are going to create our own subcommand, which is known as plugins.
 
 ## kubectl Plugins
-Kubectl plugins are standalone scripts. Scripts can be written in any programming language. These executable scripts are stored in your `PATH` and whose names start with `kubectl-`. PATH is where all you command are present. You can see PATH by
-following command :
+Kubectl plugins are standalone scripts. Scripts can be written in any programming language. These executable scripts are stored in your `PATH` and whose names start with `kubectl-`. PATH is where all you commands are present. You can see PATH by following command :
 ```
 # echo $PATH
 ```
