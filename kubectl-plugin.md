@@ -1,4 +1,4 @@
-# Extending scope of kubectl with subcommands
+# Extending scope of kubectl with plugins
 
 ![kubectl](https://raw.githubusercontent.com/rahulwaykos/kubernetes/master/kubectl.png)
 
